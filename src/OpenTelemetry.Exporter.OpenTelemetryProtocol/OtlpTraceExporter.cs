@@ -81,7 +81,19 @@ namespace OpenTelemetry.Exporter
                 }
 
 #if NETSTANDARD2_1
-                this.channel = GrpcChannel.ForAddress(options.Endpoint);
+                if (options.HttpHandler is null)
+                {
+                    this.channel = GrpcChannel.ForAddress(options.Endpoint);
+                }
+                else
+                {
+                    var channelOptions = new GrpcChannelOptions()
+                    {
+                        HttpHandler = options.HttpHandler,
+                        DisposeHttpClient = true,
+                    };
+                    this.channel = GrpcChannel.ForAddress(options.Endpoint, channelOptions);
+                }
 #else
                 ChannelCredentials channelCredentials;
                 if (options.Endpoint.Scheme == Uri.UriSchemeHttps)

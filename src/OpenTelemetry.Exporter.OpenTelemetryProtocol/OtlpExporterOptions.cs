@@ -16,6 +16,9 @@
 
 using System;
 using System.Diagnostics;
+#if NETSTANDARD2_1
+using System.Net.Http;
+#endif
 
 namespace OpenTelemetry.Exporter
 {
@@ -52,5 +55,12 @@ namespace OpenTelemetry.Exporter
         /// Gets or sets the BatchExportProcessor options. Ignored unless ExportProcessorType is Batch.
         /// </summary>
         public BatchExportProcessorOptions<Activity> BatchExportProcessorOptions { get; set; } = new BatchExportProcessorOptions<Activity>();
+
+#if NETSTANDARD2_1
+        /// <summary>
+        /// Gets or sets custom HttpMessageHandler for the underlying gRPC request (netstandard2.1).
+        /// </summary>
+        public HttpMessageHandler HttpHandler { get; set; }
+#endif
     }
 }
