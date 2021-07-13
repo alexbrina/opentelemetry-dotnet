@@ -1,0 +1,2 @@
+OpenTelemetry.Exporter.OtlpExporterOptions.HttpHandler.get -> System.Net.Http.HttpMessageHandler
+OpenTelemetry.Exporter.OtlpExporterOptions.HttpHandler.set -> void
